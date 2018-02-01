@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>search</title>
+
+<link rel="stylesheet" href="assets/normalize1.css">
+<link rel="stylesheet" href="assets/style1.css" media="screen" type="text/css" />
+</head>
+<body>
+<section class="webdesigntuts-workshop">
+  <script>
+    function star_search()
+    {
+      name=document.forms["f"]["star_name"].value;
+      localStorage.setItem("star_name", name);
+      //document.getElementById("p1").innerHTML=name;
+      window.location.href='home';//查询后进行页面跳转
+    }
+  </script>
+  <form name="f" action="" method="">
+    <nobr><input name="star_name" type="search" placeholder="What are you looking for?">
+    <button type="button" onclick="star_search()">Search</button></nobr> 
+  </form>
+
+  <!-- 留空补一个词云 -->
+  <div>
+    <P>hdfhsdfhsdfhsdifhisduhfvksjdsjklhgkjsdhgjkshdgk</P>
+  </div>
+</section>
+
+</body>
+</html>

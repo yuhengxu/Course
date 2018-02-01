@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="assets/normalize.css" />
+<link rel="stylesheet" type="text/css" href="assets/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="assets/component.css" />
+<!--[if IE]>
+<script src="assets/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+		<script>
+				 function sign_up()
+                {
+
+                    var xmlhttp=new XMLHttpRequest();//创建一个XMLHttpRequest对象
+					var result="";
+					xmlhttp.onreadystatechange=function()//每当readystate属性改变时，调用该函数
+					{
+						if(xmlhttp.readyState==4&&xmlhttp.status==200)
+						{
+							result=xmlhttp.responseText;//获得字符串形式的响应数据
+							document.getElementById("p1").innerHTML=result;
+							if(result=='1')//与数据库匹配，没有重名，注册成功
+							{
+								window.location.href='index';//注册成功，返回登录界面
+							}
+                            else
+                            {
+                                //留在注册界面，提示用户已被注册，要求更换用户名
+                            }
+						}
+					}
+                    var sendText="",username,password;
+					username=document.forms["f"]["logname"].value;
+					password1=document.forms["f"]["logpass1"].value;
+					password2=document.forms["f"]["logpass2"].value;
+                    
+                    if(password1==password2)
+                    {
+                        // 提交到数据库中进行匹配，是否有重名
+                        sendText="username="+username+"&"+"password="+password;
+					    xmlhttp.send(sendText);//将请求发送的服务器
+                    }
+                    else
+                    {
+                        //返回两次密码不一致，留在注册页面，提示密码不一致
+                    }
+                }
+			</script>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>Mushroom</h3>
+						<form action="#" name="f" method="post">
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="logpass1" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+                                <input name="logpass2" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请确认密码">
+							</div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" onclick="sign_in()">注册</a></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="assets/TweenLite.min.js"></script>
+		<script src="assets/EasePack.min.js"></script>
+		<script src="assets/rAF.js"></script>
+		<script src="assets/demo-1.js"></script>
+	</body>
+</html>

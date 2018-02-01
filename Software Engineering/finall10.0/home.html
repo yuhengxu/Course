@@ -1,0 +1,549 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>明星主页</title>
+<link href="assets/style.css" rel="stylesheet">
+<link href="assets/animation.css" rel="stylesheet">
+<link href="assets/lrtk.css" rel="stylesheet" />
+<script type="text/javascript" src="assets/jquery.js"></script>
+<script type="text/javascript" src="assets/js.js"></script>
+</head>
+
+<body>
+<header>
+	<nav id="nav">
+    	<ul>
+            <li><a href="#">网站首页</a></li>
+            <li><a href="https://github.com/yuhengxu/Mushroom" target="_blank" title="了解我们">了解我们</a></li>
+
+        </ul>
+         <script src="assets/silder.js"></script><!--获取当前页导航 高亮显示标题--> 
+    </nav>
+</header>
+        <script>  
+            function star_search()
+            {
+                name=document.forms["f"]["star_name"].value;
+                localStorage.setItem("star_name", name);
+                //document.getElementById("p1").innerHTML=name;
+                window.location.href='home';//查询后进行页面跳转
+            }
+
+
+
+            var xmlhttp=new XMLHttpRequest();//创建一个XMLHttpRequest对象
+            var msearch=localStorage.getItem("star_name")
+            console.log(msearch);
+            var myArr=new Array();
+            var sendText="";
+            xmlhttp.onreadystatechange=function()//每当readystate属性改变时，调用该函数
+            {
+                if(this.readyState==4&&this.status==200)
+                {
+                    // myArr=JSON.parse(this.responseText);//获得字符串形式的响应数据
+                    // var q=myArr.length
+                    // var x="", y=""
+                    // for(var i=0; i<7; i++)//循环打印
+                    // {
+                    //     x=x + myArr[i] + "</br>";
+                    // }
+                    // document.getElementById("demo").innerHTML=x;
+                    // for(var i=q/2; i<(q/2+6); i++)//循环打印
+                    // {
+                    //     y=y + myArr[i] + "</br>";
+                    // }
+                    // document.getElementById("demo1").innerHTML=y;
+                    
+
+                    myArr=JSON.parse(this.responseText);
+                    var card_f=new Array();
+                    var card_l=new Array();
+                    var m_name=new Array();
+                    var m_score=new Array();
+                    var m_type=new Array();
+                    var m_star=new Array();
+                    var m_picture=new Array();
+                    var j=0, i=0;
+                    
+                    while(myArr[i]!='$')
+                    {
+                        card_f[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        card_l[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        m_name[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        m_score[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        m_type[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        m_star[j++]=myArr[i++];
+                    }
+                    i++;
+                    j=0;
+                    while(myArr[i]!='$')
+                    {
+                        m_picture[j++]=myArr[i++];
+                    }
+                    
+                    //向下一段js传值
+                    var m_sco="";
+                    m_sco=JSON.stringify(m_score);
+                    console.log(m_sco);
+                    localStorage.setItem("m_sco",m_sco);
+
+
+
+
+                    //显示到star_card
+                    var x="", y=""
+                    for(var i=0; i<7; i++)//循环打印
+                    {
+                        x=x + card_f[i] + "</br>";
+                    }
+                    document.getElementById("demo").innerHTML=x;
+                    for(var i=0; i<7; i++)//循环打印
+                    {
+                        y=y + card_l[i] + "</br>";
+                    }
+                    document.getElementById("demo1").innerHTML=y;
+
+                    //显示到影星杂谈
+                    q=card_f.length;
+                    document.getElementById("else1").innerHTML=card_l[q-3];
+                    document.getElementById("else2").innerHTML=card_l[q-2];
+                    document.getElementById("else3").innerHTML=card_l[q-1];
+
+                    //显示电影名称
+                    document.getElementById("m1").innerHTML=m_name[0];
+                    document.getElementById("m2").innerHTML=m_name[1];
+                    document.getElementById("m3").innerHTML=m_name[2];
+                    document.getElementById("m4").innerHTML=m_name[3];
+                    document.getElementById("m5").innerHTML=m_name[4];
+                    //显示明星
+                    document.getElementById("m_t1").innerHTML=m_type[0];
+                    document.getElementById("m_t2").innerHTML=m_type[1];
+                    document.getElementById("m_t3").innerHTML=m_type[2];
+                    document.getElementById("m_t4").innerHTML=m_type[3];
+                    document.getElementById("m_t5").innerHTML=m_type[4];
+                    //显示类型
+                    document.getElementById("m_s1").innerHTML=m_star[0];
+                    document.getElementById("m_s2").innerHTML=m_star[1];
+                    document.getElementById("m_s3").innerHTML=m_star[2];
+                    document.getElementById("m_s4").innerHTML=m_star[3];
+                    document.getElementById("m_s5").innerHTML=m_star[4];
+                    //显示图片
+                    document.getElementById("m1").href=m_picture[0];
+                    document.getElementById("m2").href=m_picture[1];
+
+                    //src动态修改变量
+                    // document.getElementById("m_p1").src=m_picture[0];
+                    // document.getElementById("m_p2").src=m_picture[1];
+                    // document.getElementById("m_p3").src=m_picture[2];
+                    // document.getElementById("m_p4").src=m_picture[3];
+                    // document.getElementById("m_p5").src=m_picture[4];
+                    document.getElementById("title").src="./assets/6.jpg";
+                    document.getElementById("m_p1").src="./assets/7.jpg";
+                    document.getElementById("m_p2").src="./assets/8.jpg";
+                    document.getElementById("m_p3").src="./assets/9.jpg";
+                    document.getElementById("m_p4").src="./assets/10.jpg";
+                    document.getElementById("m_p5").src="./assets/11.jpg";
+                    console.log(m_picture[0]);
+                    console.log(m_picture[1]);
+
+                    //相关明星部分未完成
+                    // m_star[0]="何炅";
+                    // document.getElementById("cont1").src="./photo/"+m_star[0];
+                }
+            }
+            xmlhttp.open("POST","http://localhost:8088/home",true);//向服务器发送请求，规定请求的类型
+            sendText="msearch"+msearch;
+            console.log(sendText);
+            xmlhttp.send(sendText);//将请求发送的服务器
+
+
+      </script> 
+    
+<div id="mainbody">
+	<div class="info">
+        <figure>
+            <img id="title" src="assets/1.jpg" alt="star_show" height="300" width="700">
+            <figcaption>
+                <strong>Star show</strong>
+                
+                您！  的！  每！  一！  次！  搜！  索！  都！  是！  对！  我！  们！  最！  大！  的!  支!  持!  , Muhroom  期!  待!  您!  的!  到!  来  !
+            </figcaption>
+        </figure>
+
+
+        <!-- 打印信息明星 -->
+        <div class="card">
+              <h1>Star Card</h1>
+              <div id="left" style="float:left ;  width:25%;  height:100%;">
+                <p id="demo"><nobr></nobr></p>
+              </div>
+              <div id="right" style="float:left ;  width:75%; height:100%;">
+                <nobr><p id="demo1"><nobr></nobr></p></nobr>
+              </div>
+        </div>
+    </div>
+    
+    
+
+<!--info结束-->
+
+<!--博客的列表开始-->
+    <div class="blogs">
+        <ul class="bloglist">
+            <li>
+                <div class="row_box">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h2 class="title"> <a id="m1">Mushroom拼命寻找中...</a></h2>
+                    <ul class="textinfo">
+                        <a><img id="m_p1" src="assets/1.jpg"></a>
+                        <p id="m_t1">精彩马上就来</p>
+                        <p id="m_s1">精彩马上就来</p>
+                        
+                    </ul>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a> </li>
+                        <li class="icon_time"><a href="#">2017-11-11</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+             <li>
+                <div class="row_box">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h2 class="title"> <a id="m2">Mushroom拼命寻找中...</a></h2>
+                    <ul class="textinfo">
+                        <a><img id="m_p2" src="assets/2.jpg"></a>
+                        <p id="m_t2">精彩马上就来</p>
+                        <p id="m_s2">精彩马上就来</p>
+                        
+                    </ul>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a> </li>
+                        <li class="icon_time"><a href="#">2017-11-11</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+             <li>
+                <div class="row_box">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h2 class="title"> <a href="#" id="m3">Mushroom拼命寻找中...</a></h2>
+                    <ul class="textinfo">
+                        <a href="#"><img id="m_p3" src="assets/3.jpg"></a>
+                        <p id="m_t3">精彩马上就来</p>
+                        <p id="m_s3">精彩马上就来</p>
+                        
+                    </ul>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a> </li>
+                        <li class="icon_time"><a href="#">2017-11-11</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+            <li>
+                <div class="row_box">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h2 class="title"> <a href="#" id="m4">Mushroom拼命寻找中...</a></h2>
+                    <ul class="textinfo">
+                        <a href="#"><img id="m_p4" src="assets/4.jpg"></a>
+                        <p id="m_t4">精彩马上就来</p>
+                        <p id="m_s4">精彩马上就来</p>
+                        
+                    </ul>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a> </li>
+                        <li class="icon_time"><a href="#">2017-11-9</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+            <li>
+                <div class="row_box">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h2 class="title"> <a href="#" id="m5">Mushroom拼命寻找中...</a></h2>
+                    <ul class="textinfo">
+                        <a href="#"><img id="m_p5" src="assets/5.jpg"></a>
+                        <p id="m_t5">精彩马上就来</p>
+                        <p id="m_s5">精彩马上就来</p>
+                        
+                    </ul>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a> </li>
+                        <li class="icon_time"><a href="#">2017-11-11</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    
+    <!--博客列表部分结束-->
+    
+    
+    <!--右半部分开始-->
+        <aside>
+            <div class="tuijian">
+                <h2>影星杂谈</h2>
+                <ol>
+                    <li> <span><strong>1</strong></span><a id="else1" href="#">我们都是追星的孩子</a></li>
+                    <li> <span><strong>2</strong></span><a id="else2" href="#">我们都是追星的孩子</a></li>
+                    <li> <span><strong>3</strong></span><a id="else3" href="#">我们都是追星的孩子</a></li>
+                    
+                </ol>
+            </div>
+            <div class="toppic">
+                <h2>相关明星</h2>
+                <ul>
+                    <li><a href="#"><img id="cont1" src="assets/k01.jpg">本版块暂缓开放<p>待更新</p></a> </li>
+                    <li><a href="#"><img id="cont2" src="assets/k01.jpg">本版块暂缓开放<p>待更新</p></a> </li>
+                    <li><a href="#"><img id="cont3" src="assets/k01.jpg">本版块暂缓开放<p>待更新</p></a> </li>  
+                </ul>
+            </div>
+            <div class="clicks">
+                <h2>热门点击</h2>
+                <ol>
+                    <li><span><a href="#">豆瓣</a></span><a href="https://movie.douban.com/">提供图书、电影、音乐唱片的推荐、评论,以及城市独特的文化生活</a></li>
+                    <li><span><a href="#">烂番茄</a></span><a href="http://www.egouz.com/topics/1629.html">美国著名影评网站烂番茄综合好评度指数</a></li>
+                    <li><span><a href="#">爱奇异</a></span><a href="http://www.iqiyi.com/">大型视频网站,网络视频播放首选平台</a></li>
+                    <li><span><a href="#">知乎</a></span><a href="https://www.zhihu.com/">中文互联网最大的知识平台</a></li>
+                    <li><span><a href="#">搜狐</a></span><a href="https://www.sohu.com/">搜狐网为用户提供24小时不间断的最新资讯</a></li>
+                    
+                </ol>
+            </div>
+            <div class="search">
+                <form id="f" class="searchform" method="post" action="#">
+                    <input type="text" placeholder="Search" name="star_name" onFocus="" onBlur="">
+                    <button type="button" onclick="star_search()" style="display: inline=block;padding: 0 20px 0 20px;font-size:12px;color:rgb(12, 12, 12);line-height:22px;">Search</button>
+                </form>
+            </div>
+            <div class="viny">
+                <dl>
+                    <dt class="art"><img src="assets/artwork.png" alt="专辑"></dt>
+                    <dd class="icon_song"><span></span>南方姑娘</dd>
+                    <dd class="icon_artist"><span></span>歌手：赵雷</dd>
+                    <dd class="icon_album"><span></span>所属专辑：《赵小雷》</dd>
+                    <dd class="icon_like"><span></span><a href="#">喜欢</a></dd>
+                    <dd class="music"><audio src="assets/nf1.mp3" controls loop></audio></dd>
+
+                </dl>
+            </div>
+        </aside>
+	</div>
+    <!--blogs结束-->
+</div>
+<!--mainbody结束-->
+<footer>
+    <div class="foot-mid">
+        <div class="links">
+            <h2>综合评分</h2>
+            <li><a href="#">基于豆瓣影评，纯属娱乐！请勿较真！</a></li>
+        </div>
+        <div class="visitors">
+            
+            <script type="text/javascript">	
+                var mW = 400;
+                var mH = 400;
+                var mData = [['颜值', 77],
+                            ['演技', 72],
+                            ['片酬', 46],
+                            ['公益', 100],
+                            ['热度', 80],
+                            ['绯闻', 60]];
+                            console.log(mData[2][1]);
+
+
+                    //接收转化来的字符串
+                    var newm_score = localStorage.getItem("m_sco");   
+                    console.log(newm_score[2]);
+                    console.log(newm_score[4]);
+                    console.log(newm_score[8]); 
+                    console.log(newm_score[10]);
+                    console.log(newm_score[14]);
+                    console.log(newm_score[16]);                                        
+                    console.log(mData[2][1]); 
+                    mData[0][1]=parseInt(newm_score[2])*10;
+                    mData[1][1]=parseInt(newm_score[4])*10;
+                    mData[2][1]=parseInt(newm_score[8])*10;
+                    mData[3][1]=parseInt(newm_score[10])*10;
+                    mData[4][1]=parseInt(newm_score[14])*10;
+                    mData[5][1]=parseInt(newm_score[16])*10;
+
+                var mCount = mData.length; //边数	
+                var mCenter = mW /2; //中心点
+                var mRadius = mCenter - 50; //半径(减去的值用于给绘制的文本留空间)
+                var mAngle = Math.PI * 2 / mCount; //角度
+                var mCtx = null;
+                var mColorPolygon = '#B8B8B8'; //多边形颜色
+                var mColorLines = '#B8B8B8'; //顶点连线颜色
+                var mColorText = '#000000';
+            
+                //初始化
+                (function(){
+                  var canvas = document.createElement('canvas');
+                  document.body.appendChild(canvas);
+                  canvas.height = mH;
+                  canvas.width = mW;
+                  mCtx = canvas.getContext('2d');
+                  
+                  drawPolygon(mCtx);
+                  drawLines(mCtx);
+                  drawText(mCtx);
+                  drawRegion(mCtx);
+                  drawCircle(mCtx);
+                })();
+              
+                  // 绘制多边形边
+                  function drawPolygon(ctx){
+                      ctx.save();
+                      
+                      ctx.strokeStyle = mColorPolygon;
+                      var r = mRadius/ mCount; //单位半径
+                      //画6个圈
+                      for(var i = 0; i < mCount; i ++){
+                          ctx.beginPath();  		
+                          var currR = r * ( i + 1); //当前半径
+                          //画6条边
+                          for(var j = 0; j < mCount; j ++){
+                              var x = mCenter + currR * Math.cos(mAngle * j);
+                              var y = mCenter + currR * Math.sin(mAngle * j);
+                              
+                              ctx.lineTo(x, y);
+                          }
+                          ctx.closePath()
+                          ctx.stroke();
+                      }
+                      
+                      ctx.restore();
+                  }
+                
+                //顶点连线
+                function drawLines(ctx){
+                    ctx.save();
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = mColorLines;
+                    
+                    for(var i = 0; i < mCount; i ++){
+                        var x = mCenter + mRadius * Math.cos(mAngle * i);
+                        var y = mCenter + mRadius * Math.sin(mAngle * i);
+                        
+                        ctx.moveTo(mCenter, mCenter);
+                        ctx.lineTo(x, y);
+                    }
+                    
+                    ctx.stroke();
+                    
+                    ctx.restore();
+                }
+                
+                //绘制文本
+                function drawText(ctx){
+                    ctx.save();
+                    
+                    var fontSize = mCenter / 12;
+                    ctx.font = fontSize + 'px Microsoft Yahei';
+                    ctx.fillStyle = mColorText;
+                    
+                    for(var i = 0; i < mCount; i ++){
+                        var x = mCenter + mRadius * Math.cos(mAngle * i);
+                        var y = mCenter + mRadius * Math.sin(mAngle * i);
+                        
+                        if( mAngle * i >= 0 && mAngle * i <= Math.PI / 2 ){
+                            ctx.fillText(mData[i][0], x, y + fontSize);	
+                        }else if(mAngle * i > Math.PI / 2 && mAngle * i <= Math.PI){
+                            ctx.fillText(mData[i][0], x - ctx.measureText(mData[i][0]).width, y + fontSize);	
+                        }else if(mAngle * i > Math.PI && mAngle * i <= Math.PI * 3 / 2){
+                            ctx.fillText(mData[i][0], x - ctx.measureText(mData[i][0]).width, y);	
+                        }else{
+                            ctx.fillText(mData[i][0], x, y);
+                        }
+                        
+                    }
+                    
+                    ctx.restore();
+                }
+                
+                //绘制数据区域
+                function drawRegion(ctx){
+                    ctx.save();
+                    
+                    ctx.beginPath();
+                    for(var i = 0; i < mCount; i ++){
+                        var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i][1] / 100;
+                        var y = mCenter + mRadius * Math.sin(mAngle * i) * mData[i][1] / 100;
+                        
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+                
+                //画点
+                function drawCircle(ctx){
+                    ctx.save();
+                
+                    var r = mCenter / 18;
+                    for(var i = 0; i < mCount; i ++){
+                        var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i][1] / 100;
+                        var y = mCenter + mRadius * Math.sin(mAngle * i) * mData[i][1] / 100;
+            
+                        ctx.beginPath();			
+                        ctx.arc(x, y, r, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
+                        ctx.fill();
+                    }		
+                    
+                    ctx.restore();
+                }
+            </script>
+        </div>
+    
+</footer>
+
+
+<div id="tbox"> <a id="togbook" href="#"></a>
+ <a id="gotop" href="javascript:void(0)"></a> </div>
+
+ <div>
+     
+ </div>
+</body>
+</html>

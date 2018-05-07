@@ -39,6 +39,7 @@ public class java_matrix{
         }
 
         //output
+        /*
         for(int i = 0; i < maxn; i++)
         {
             for(int j = 0; j < maxn; j++)
@@ -47,6 +48,7 @@ public class java_matrix{
             }
             System.out.print("\n");
         }
+        */
 
         //endtime
         long end = System.currentTimeMillis();

@@ -11,12 +11,12 @@ scanf		PROTO C :ptr sbyte, :VARARG
 
 .data
 ;矩阵
-arr1	dword	90000	dup(?)
-arr2	dword	90000	dup(?)
-arr3	dword	90000	dup(0)
-num		dword	90000			;元素个数
-row		dword	300
-col		dword	300
+arr1	dword	1000000	dup(?)
+arr2	dword	1000000	dup(?)
+arr3	dword	1000000	dup(0)
+num		dword	1000000			;元素个数
+row		dword	1000
+col		dword	1000
 
 ;线性同余参数
 a		dword	9973
@@ -39,7 +39,7 @@ tipc	dword	0
 temp	dword	4
 
 ;输入输出
-outputTime		db	"%d ms", 0ah, 0
+outputTime		db	"汇编运行时间：%d ms", 0ah, 0
 outputString	db	"%d ", 0
 outputn			db	" ", 0ah, 0
 
@@ -177,7 +177,6 @@ l6:
 output:
 	invoke	GetTickCount
 	mov endtime,	eax
-	invoke printf, offset outputn
 
 	mov eax,	endtime
 	sub eax,	starttime

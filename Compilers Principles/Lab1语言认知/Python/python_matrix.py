@@ -13,7 +13,7 @@ for i in range(maxn):
         for k in range(maxn):
         	arr3[i][j] += arr1[i][k] * arr2[k][j]
 
-print(arr3)
+#print(arr3)
 
 end = datetime.datetime.now()
 print("python的运行时间：", end - start)

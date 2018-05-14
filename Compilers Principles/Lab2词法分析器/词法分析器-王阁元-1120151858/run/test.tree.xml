@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TNT_CMPL_UNIT name="compilationUnit">
+  <TNT_FUNC_DEF name="functionDefinition">
+    <TNT_TYPE_SPE name="typeSpecifier">
+      <TNT_UNKNOWN name="int"/>
+    </TNT_TYPE_SPE>
+    <TNT_ID name="main"/>
+    <TNT_CMPND_STMT name="compoundStatement">
+      <TNT_JMP_STMT name="jumpStatement">
+        <TNT_UNKNOWN name="return"/>
+        <TNT_EXP name="expression">
+          <TNT_CONST name="0"/>
+        </TNT_EXP>
+      </TNT_JMP_STMT>
+    </TNT_CMPND_STMT>
+  </TNT_FUNC_DEF>
+</TNT_CMPL_UNIT>

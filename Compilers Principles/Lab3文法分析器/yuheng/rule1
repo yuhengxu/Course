@@ -1,0 +1,26 @@
+//S:A B B
+//A:C d
+//A:@
+//B:g h i
+//B:@
+//C:d c
+//C:@
+//C:e f
+
+//Q:S
+//S:a A d
+//S:b A c
+//S:a e c
+//S:b e d
+//A:e
+
+//Q:S
+//S:B B
+//B:a B
+//B:b
+
+S:L
+L:E , L
+L:E
+E:a
+E:b

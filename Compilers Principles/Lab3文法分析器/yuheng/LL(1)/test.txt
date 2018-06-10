@@ -1,0 +1,14 @@
+E:T E1
+E1:+ T E1
+E1:@
+T:F T1
+T1:* F T1
+T1:@
+F:( E )
+F:i
+
+//PROGRAM:begin d ; S end
+//S:d ; S
+//S:s T
+//T:@
+//T:; s T

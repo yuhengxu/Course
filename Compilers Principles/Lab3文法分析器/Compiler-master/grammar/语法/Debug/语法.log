@@ -1,0 +1,22 @@
+﻿  Base.cpp
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(11): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(20): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(41): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(137): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(143): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(147): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(154): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(169): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(186): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(191): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(198): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(208): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\base.cpp(218): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  TableStack.cpp
+c:\users\yuheng\desktop\compiler-master\grammar\语法\tablestack.cpp(52): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\tablestack.cpp(99): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\tablestack.cpp(104): warning C4018: '<': signed/unsigned mismatch
+c:\users\yuheng\desktop\compiler-master\grammar\语法\tablestack.cpp(107): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  语法.vcxproj -> C:\Users\yuheng\Desktop\Compiler-master\grammar\Debug\语法.exe

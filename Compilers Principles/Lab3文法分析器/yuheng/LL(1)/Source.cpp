@@ -1,4 +1,5 @@
 #include<iostream>
+#include<fstream>
 #include<stdio.h>
 #include<stdlib.h>
 #include<string>
@@ -10,15 +11,16 @@
 #include <iomanip>
 #include"tinyxml2.h"
 
+
 using namespace std;
 using namespace tinyxml2;
 
-#define path "C:\\Users\\yuheng\\Desktop\\LL(1)\\test.txt"
-//#define path "C:\\Users\\yuheng\\Desktop\\LL(1)\\LL(1).txt"
+#define xmlpath "C:\\Users\\yuheng\\Desktop\\LL(1)\\test.xml"
+//#define path "C:\\Users\\yuheng\\Desktop\\LL(1)\\test.txt"
+#define path "C:\\Users\\yuheng\\Desktop\\LL(1)\\LL(1).txt"
 #define buff_MIXN 200
 #define table_MIXN 200
 
-const char* xmlpath = "C:\\Users\\yuheng\\Desktop\\LL(1)\\test.xml";
 
 class Gx									//一个项目
 {
@@ -29,6 +31,13 @@ public:
 public:
 	Gx initG(char* buff);					//从文本中读入一条产生式，对其进行初始化(填入左部右部)
 };
+
+struct analysis
+{
+	string str;
+	bool flag = false;
+}g;
+
 
 vector<Gx>I_list;
 set<string>nonTerminal;						//非终结符集
@@ -65,7 +74,7 @@ Gx Gx::initG(char* buff)					//这是初始化函数用来初始化文法的，不用管实现过程
 void init()
 {
 	FILE* fp = fopen(path, "r");
-	if (fp == NULL) printf("The path is not exist\n");
+	if (fp == NULL) cout << "The path is not exist" << endl;
 	else
 	{
 		char buff[buff_MIXN];
@@ -239,13 +248,13 @@ void makeTable()
 	}
 }
 
-void showAnalysis(stack<string>analyStr, vector<string>remainStr, vector<string>::iterator remainStrIt, int number)
+void showAnalysis(stack<analysis>analyStr, vector<string>remainStr, vector<string>::iterator remainStrIt, int number)
 {
 	cout << "————————————————————————————————————————————————" << endl;
 	cout << "分析栈：";
 	while (!analyStr.empty())
 	{
-		cout << setw(5) << analyStr.top();
+		cout << setw(10) << analyStr.top().str;
 		analyStr.pop();
 	}
 	cout << endl;
@@ -255,7 +264,7 @@ void showAnalysis(stack<string>analyStr, vector<string>remainStr, vector<string>
 	cout << "剩余输入串：";
 	for (tempIt = remainStr.begin(); tempIt != remainStr.end(); tempIt++)
 	{
-		cout << setw(5) << *tempIt;
+		cout << setw(10) << *tempIt;
 	}
 	cout << endl;
 
@@ -266,33 +275,47 @@ void showAnalysis(stack<string>analyStr, vector<string>remainStr, vector<string>
 void analyExp(vector<string>remainStr)
 {
 	int number;
-	stack<string>analyStr;						//分析栈
-	vector<string>remainStrCopy;
+	stack<analysis>Str;							//分析栈
+	vector<string>remainStrCopy;				//拷贝输入串的副本，用于输出分析过程
 	remainStrCopy = remainStr;
 
 	//初始化
-	analyStr.push("#");
-	analyStr.push(I_list[0].left);
+	g.str = "#";
+	g.flag = false;
+	Str.push(g);
+	g.str = I_list[0].left;
+	g.flag = false;
+	Str.push(g);
 	vector<string>::iterator it;
 	it = remainStr.begin();
 
+	//写入xml文件
+	ofstream fp;
+	fp.open(xmlpath);
+	fp << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+	fp << "<config name=\"test.xml\">" << endl;
+	fp << "<" << Str.top().str << ">" << endl;
+	string data = Str.top().str;
 
 	while (1)
 	{
 		number = 255;
 		//若当前分析栈栈顶符号X和输入串剩余第一项ai都是文法得终结符号
-		if (non_terminal[analyStr.top()] == false && non_terminal[remainStr[0]] == false)
+		if (non_terminal[Str.top().str] == false && non_terminal[remainStr[0]] == false)
 		{
 			//X=ai=# 表示分析成功，停止分析过程
-			if (analyStr.top() == *it && *it == "#")
+			if (Str.top().str == *it && *it == "#")
 			{
 				cout << "analysis succeed!" << endl;
 				break;
 			}
 			//X=ai！=# 将X从分析栈顶退掉，剩余串向后移动
-			else if (analyStr.top() == *it && *it != "#")
+			else if (Str.top().str == *it && *it != "#")
 			{
-				analyStr.pop();
+				fp << Str.top().str << endl;
+				//fp << "</" << Str.top().str << ">" << endl;
+
+				Str.pop();
 				it++;
 				remainStrCopy.erase(remainStrCopy.begin());
 			}
@@ -303,10 +326,10 @@ void analyExp(vector<string>remainStr)
 			}
 		}
 		//若X属于非终结符，查询分析表
-		else if (non_terminal[analyStr.top()] == true)
+		else if (non_terminal[Str.top().str] == true)
 		{
 			//若tableMap[X,ai]中为空白，贼执行出错处理程序
-			if (tableMap[analyStr.top()][*it] < 0 || tableMap[analyStr.top()][*it] >= I_list.size())
+			if (tableMap[Str.top().str][*it] < 0 || tableMap[Str.top().str][*it] >= I_list.size())
 			{
 				cout << "The table is NULL" << endl;
 				break;
@@ -314,21 +337,36 @@ void analyExp(vector<string>remainStr)
 			//若tableMap[X,ai]中为一个产生式规则，则将X从栈中弹出并将此规则右部得符号序列按倒叙推进栈，若产生式规则为x->@,则将x从栈中弹出
 			else
 			{
-				string analyNonTerminal = analyStr.top();
-				analyStr.pop();
+				string analyNonTerminal = Str.top().str;
 
-				if (I_list[tableMap[analyNonTerminal][*it]].right[0] != "@")
+				if (Str.top().flag == true)
 				{
-					number = tableMap[analyNonTerminal][*it];
-					for (int i = I_list[tableMap[analyNonTerminal][*it]].right.size() - 1; i >= 0; i--)
+					fp << "</" << Str.top().str << ">" << endl;
+					Str.pop();
+				}
+				else
+				{
+					Str.top().flag = true;
+					if (I_list[tableMap[analyNonTerminal][*it]].right[0] != "@")
 					{
-						analyStr.push(I_list[tableMap[analyNonTerminal][*it]].right[i]);
+						number = tableMap[analyNonTerminal][*it];
+						for (int i = I_list[tableMap[analyNonTerminal][*it]].right.size() - 1; i >= 0; i--)
+						{
+							analysis temp_G;
+							temp_G.flag = false;
+							temp_G.str = I_list[tableMap[analyNonTerminal][*it]].right[i];
+							Str.push(temp_G);
+							if (non_terminal[Str.top().str] == true)
+								fp << "<" << Str.top().str << ">" << endl;
+						}
 					}
 				}
 			}
 		}
-		showAnalysis(analyStr, remainStrCopy, it, number);
+		//showAnalysis(Str, remainStrCopy, it, number);
 	}
+
+	fp << "</config>" << endl;
 }
 
 void input()
@@ -336,6 +374,7 @@ void input()
 	vector<string>remainStr;					//余留输入串
 	string ss;
 	cout << "Waiting input, end with #" << endl;
+
 	do
 	{
 		cin >> ss;
@@ -449,9 +488,9 @@ int main()
 
 	makeTable();
 	
-	showFirst();
-	showFollow();
-	showTable();
+	//showFirst();
+	//showFollow();
+	//showTable();
 
 	input();
 
